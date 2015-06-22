@@ -1,18 +1,18 @@
 from collections import defaultdict
 from itertools import chain
-from twython import Twython
+# from twython import Twython
 import random
 import re
 import sys
 
-import config
+#import config
 
-twitter = Twython(
-    config.TWITTER_CONSUMER_KEY,
-    config.TWITTER_CONSUMER_SECRET,
-    config.TWITTER_ACCESS_TOKEN,
-    config.TWITTER_ACCESS_SECRET
-)
+# twitter = Twython(
+#     config.TWITTER_CONSUMER_KEY,
+#     config.TWITTER_CONSUMER_SECRET,
+#     config.TWITTER_ACCESS_TOKEN,
+#     config.TWITTER_ACCESS_SECRET
+# )
 
 class MarkovChain(object):
     def __init__(self, documents, **kwargs):
@@ -20,7 +20,7 @@ class MarkovChain(object):
         self.words = self.documents_to_words(documents)
         self.word_size = len(self.words)
         self.wordbase = self.wordbase()
-    
+
     def documents_to_words(self, documents):
         """Returns a list of words used in a given list of documents."""
         words = []
@@ -28,7 +28,7 @@ class MarkovChain(object):
             if document:
                 words.append(self.tokenize(document))
         return list(chain.from_iterable(words))
-    
+
     def tokenize(self, document):
         # don't want empty spaces
         words = [w.strip() for w in document.split() if w.strip() != '']
@@ -61,10 +61,11 @@ class MarkovChain(object):
         return tweet.strip()
 
 def main():
-    with open(sys.argv[1]) as f:
+    with open("BigDataBigText.txt") as f:
         text = [line for line in f]
     tweet = MarkovChain(text).generate_tweet()
-    twitter.update_status(status=tweet)
+    print(tweet)
+    #twitter.update_status(status=tweet)
 
 if __name__ == '__main__':
     main()
